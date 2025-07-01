@@ -4,6 +4,9 @@ import os
 import importlib
 import inspect
 import tornado.web
+import traceback
+import config
+
 
 def auto_generate_routes():
     """
@@ -44,6 +47,9 @@ def auto_generate_routes():
                             break
                 except ImportError as e:
                     print(f"Error importing {full_module_path}: {e}")
+                except Exception as e: 
+                    if config.debug:
+                        traceback.print_exc()
     
     return routes
 
