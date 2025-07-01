@@ -1,0 +1,363 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #faf8ef;
+    color: #776e65;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.container {
+    width: 100%;
+    max-width: 500px;
+    padding: 15px;
+}
+
+.header {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    gap: 10px;
+}
+
+h1 {
+    font-size: 80px;
+    font-weight: bold;
+    margin: 0;
+    color: #776e65;
+}
+
+.scores-container {
+    display: flex;
+    gap: 10px;
+}
+
+.score-box {
+    position: relative;
+    background-color: #bbada0;
+    padding: 10px 15px;
+    border-radius: 3px;
+    color: white;
+    min-width: 100px;
+    text-align: center;
+}
+
+.score-label {
+    font-size: 13px;
+    display: block;
+}
+
+#score, #best-score {
+    font-size: 25px;
+    font-weight: bold;
+}
+
+/* 分数增加动画 */
+.score-addition {
+    position: absolute;
+    right: 30px;
+    color: rgba(119, 110, 101, 0.9);
+    font-size: 25px;
+    animation: score-pop 0.6s ease-in-out;
+    z-index: 100;
+}
+
+@keyframes score-pop {
+    0% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-50px) scale(1.8);
+        opacity: 0;
+    }
+}
+
+#new-game {
+    background-color: #8f7a66;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    padding: 10px 20px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+#new-game:hover {
+    background-color: #9f8b77;
+    transform: scale(1.05);
+}
+
+#new-game:active {
+    transform: scale(0.95);
+}
+
+.game-container {
+    position: relative;
+    background-color: #bbada0;
+    border-radius: 6px;
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto 20px;
+    aspect-ratio: 1 / 1;
+}
+
+.grid-container {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    bottom: 15px;
+    left: 15px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+    grid-gap: 15px;
+    aspect-ratio: 1 / 1;
+}
+
+.grid-cell {
+    background-color: rgba(238, 228, 218, 0.35);
+    border-radius: 3px;
+    width: 100%;
+    height: 100%;
+}
+
+#tile-container {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    bottom: 15px;
+    left: 15px;
+    z-index: 2;
+    aspect-ratio: 1 / 1;
+}
+
+.tile {
+    position: absolute;
+    border-radius: 3px;
+    font-size: 55px;
+    font-weight: bold;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    transition: transform 0.15s ease-in-out, left 0.15s ease-in-out, top 0.15s ease-in-out;
+    animation: tile-appear 0.2s ease-in-out;
+}
+
+/* 方块出现动画 */
+@keyframes tile-appear {
+    0% {
+        transform: scale(0);
+        opacity: 0;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* 方块合并动画 */
+.tile.merged {
+    animation: tile-merge 0.2s ease-in-out;
+    z-index: 20;
+}
+
+@keyframes tile-merge {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.2);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* 不同数值的方块颜色 */
+.tile-2 {
+    background-color: #eee4da;
+    color: #776e65;
+}
+
+.tile-4 {
+    background-color: #ede0c8;
+    color: #776e65;
+}
+
+.tile-8 {
+    background-color: #f2b179;
+    color: white;
+}
+
+.tile-16 {
+    background-color: #f59563;
+    color: white;
+}
+
+.tile-32 {
+    background-color: #f67c5f;
+    color: white;
+}
+
+.tile-64 {
+    background-color: #f65e3b;
+    color: white;
+}
+
+.tile-128 {
+    background-color: #edcf72;
+    color: white;
+    font-size: 45px;
+    box-shadow: 0 0 30px 10px rgba(243, 215, 116, 0.2381),
+                inset 0 0 0 1px rgba(255, 255, 255, 0.14286);
+}
+
+.tile-256 {
+    background-color: #edcc61;
+    color: white;
+    font-size: 45px;
+    box-shadow: 0 0 30px 10px rgba(243, 215, 116, 0.31746),
+                inset 0 0 0 1px rgba(255, 255, 255, 0.19048);
+}
+
+.tile-512 {
+    background-color: #edc850;
+    color: white;
+    font-size: 45px;
+    box-shadow: 0 0 30px 10px rgba(243, 215, 116, 0.39683),
+                inset 0 0 0 1px rgba(255, 255, 255, 0.2381);
+}
+
+.tile-1024 {
+    background-color: #edc53f;
+    color: white;
+    font-size: 35px;
+    box-shadow: 0 0 30px 10px rgba(243, 215, 116, 0.47619),
+                inset 0 0 0 1px rgba(255, 255, 255, 0.28571);
+}
+
+.tile-2048 {
+    background-color: #edc22e;
+    color: white;
+    font-size: 35px;
+    box-shadow: 0 0 30px 10px rgba(243, 215, 116, 0.55556),
+                inset 0 0 0 1px rgba(255, 255, 255, 0.33333);
+}
+
+.game-explanation {
+    text-align: center;
+    margin-top: 20px;
+    line-height: 1.5;
+}
+
+.settings {
+    display: flex;
+    justify-content: center;
+    margin-top: 15px;
+}
+
+.sound-toggle {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    user-select: none;
+    padding: 5px 10px;
+    border-radius: 3px;
+    background-color: #f5f5f5;
+    transition: background-color 0.3s;
+}
+
+.sound-toggle:hover {
+    background-color: #e8e8e8;
+}
+
+.sound-toggle input {
+    margin-right: 5px;
+}
+
+.game-over {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(238, 228, 218, 0.73);
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+    animation: game-over-appear 0.8s ease-in-out;
+}
+
+/* 游戏结束动画 */
+@keyframes game-over-appear {
+    0% {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.game-over-message {
+    font-size: 60px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    animation: message-drop 0.5s ease-in-out;
+}
+
+@keyframes message-drop {
+    0% {
+        transform: translateY(-100px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* 响应式设计 */
+@media (max-width: 520px) {
+    body {
+        padding: 10px;
+    }
+
+    .container {
+        padding: 10px;
+    }
+    
+    h1 {
+        font-size: 60px;
+    }
+    
+    .tile {
+        font-size: 45px;
+    }
+    
+    .tile-128, .tile-256, .tile-512 {
+        font-size: 35px;
+    }
+    
+    .tile-1024, .tile-2048 {
+        font-size: 25px;
+    }
+}
