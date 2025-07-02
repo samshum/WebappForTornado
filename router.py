@@ -10,7 +10,7 @@ import config
 
 def auto_generate_routes():
     """
-    自动扫描handlers目录，根据文件夹和文件名生成路由
+    自动扫描handlers目录,根据文件夹和文件名生成路由
     """
     routes = []
     handlers_dir = os.path.join(os.path.dirname(__file__), 'handlers')
